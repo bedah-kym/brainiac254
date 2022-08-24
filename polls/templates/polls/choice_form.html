@@ -1,0 +1,19 @@
+{% extends 'polls/base.html' %}
+
+
+{% block content %}
+
+
+    <form  method="post">{% csrf_token %}
+
+      <fieldset>
+        <legend><h1>create choices</h1></legend>
+        <div class="">
+          <label for="choice">question {{form.as_p}}</label>
+        </div>
+
+      </fieldset>
+      <input type="submit">
+    </form>
+
+{% endblock%}

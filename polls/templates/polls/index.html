@@ -1,0 +1,23 @@
+{% extends 'polls/base.html' %}
+{% block content %}
+  <h1>HOME</h1>
+
+  <section class="main-card" style="">
+      {% for question in questions%}
+        <div class="main-card main-card__question-card ">
+            <a href="{% url 'polls:detail' question.id %}"><ul>{{forloop.counter}}{{question}},,</ul></a>
+
+        </div>
+        <div class="main-card main-card__progress">
+          {% for question in question.choice_set.all %}
+            <p>{{question.choice_text}}--{{question.votes}}</p>
+          {% endfor %}
+        </div
+        <p>published on {{question.pub_date}} by {{request.user}}</p>
+        <a href="{% url 'polls:delete' question.id %}">delete poll</a>
+      {% endfor %}
+
+  </section>
+
+
+{%endblock%}

@@ -1,0 +1,14 @@
+{% extends 'polls/base.html' %}
+
+{% block content %}
+
+<h1>DELETE POLL </h1>
+    <form method="post">{% csrf_token %}
+    <p>Are you sure you want to delete "{{ object.question_text }}"?</p>
+    <input type="submit" value="Confirm">
+    </form>
+
+
+  <a href="{% url 'polls:home' %}">back home</a>
+
+{%endblock%}

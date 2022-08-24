@@ -1,0 +1,14 @@
+{% extends 'polls/base.html' %}
+
+{% block content %}
+
+<h1>RESULTS</h1>
+  <h3>{{q.question_text}}</h3>
+
+  {% for choices in q.choice_set.all %}
+    <li>{{choices}} = {{choices.votes}} vote{{choices.votes|pluralize}}</li>
+  {% endfor %}
+
+  <a href="{% url 'polls:home' %}">back home</a>
+
+{%endblock%}

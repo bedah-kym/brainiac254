@@ -1,0 +1,15 @@
+beautifulsoup4==4.11.1
+certifi==2021.10.8
+charset-normalizer==2.0.12
+distlib==0.3.4
+filelock==3.6.0
+idna==3.3
+lxml==4.8.0
+pipenv==2022.1.8
+platformdirs==2.5.1
+requests==2.27.1
+six==1.16.0
+soupsieve==2.3.2.post1
+urllib3==1.26.9
+virtualenv==20.13.3
+virtualenv-clone==0.5.7

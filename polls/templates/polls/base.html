@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+<!--nav and logo-->
+  <div class="logo">
+    <img src="" alt="">
+  </div>
+  <div class="navigation">
+    <nav class="nav">
+      <ul class="nav-list">
+        <li class="nav-list nav-list__item"><a href="{% url 'polls:home'%}">home</a></li>
+        <li class="nav-list nav-list__item"><a href="{% url 'polls:create'%}">newpoll</a></li>
+
+      </ul>
+    </nav>
+  </div>
+<!--body and sections-->
+  <body class="body">
+    {% block content %}
+
+    {% endblock %}
+  </body>
+</html>
