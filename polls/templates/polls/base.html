@@ -1,7 +1,11 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css'%}">
     <title></title>
   </head>
 <!--nav and logo-->
@@ -11,8 +15,8 @@
   <div class="navigation">
     <nav class="nav">
       <ul class="nav-list">
-        <li class="nav-list nav-list__item"><a href="{% url 'polls:home'%}">home</a></li>
-        <li class="nav-list nav-list__item"><a href="{% url 'polls:create'%}">newpoll</a></li>
+        <li class=" nav__item"><a class="nav__link" href="{% url 'polls:home'%}">home</a></li>
+        <li class="nav__item"><a class="nav__link" href="{% url 'polls:create'%}">newpoll</a></li>
 
       </ul>
     </nav>

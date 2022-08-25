@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<h1>DETAILS</h1>
+<h1>VOTE WISELY</h1>
     <form class="" action="{% url 'polls:vote' q.id %}" method="post">{% csrf_token %}
 
       <fieldset>
@@ -14,7 +14,7 @@
           <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
         {% endfor %}
       </fieldset>
-      <input type="submit" value="vote">
+      <input class= "poll__btn"type="submit" value="vote">
     </form>
 
 {% endblock%}

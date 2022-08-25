@@ -1,20 +1,28 @@
 {% extends 'polls/base.html' %}
 {% block content %}
-  <h1>HOME</h1>
 
-  <section class="main-card" style="">
+
+  <section class="card" style="">
       {% for question in questions%}
-        <div class="main-card main-card__question-card ">
-            <a href="{% url 'polls:detail' question.id %}"><ul>{{forloop.counter}}{{question}},,</ul></a>
-
+        {% if question.choice_set.all %}
+        <div class="poll">
+          <div class="poll poll__question">
+              <a class="poll__link "href="{% url 'polls:detail' question.id %}"><ul>{{forloop.counter}}.{{question}}</ul></a>
+          </div>
+          <div class="poll poll__progress">
+            {% for question in question.choice_set.all %}
+              <p class="poll__choice">{{question.choice_text}}({{question.votes}})</p>
+              <progress class="progress-bar"value="{{question.votes}}" max="100">{{question.votes}}</progress>
+            {% endfor %}
+            <p class='poll__published'>published on {{question.pub_date}} by {{request.user}}</p>
+            <a href="{% url 'polls:delete' question.id %}"><button type="button" class="poll__deletebtn">Delete</button></a>
+            <a href="{% url 'polls:detail' question.id %}"><button type="button" class="poll__btn"> Vote</button></a>
+          </div
         </div>
-        <div class="main-card main-card__progress">
-          {% for question in question.choice_set.all %}
-            <p>{{question.choice_text}}--{{question.votes}}</p>
-          {% endfor %}
-        </div
-        <p>published on {{question.pub_date}} by {{request.user}}</p>
-        <a href="{% url 'polls:delete' question.id %}">delete poll</a>
+
+        {% else %}
+          <p>none</p>
+        {% endif%}
       {% endfor %}
 
   </section>

@@ -2,13 +2,19 @@
 
 {% block content %}
 
-<h1>RESULTS</h1>
-  <h3>{{q.question_text}}</h3>
 
-  {% for choices in q.choice_set.all %}
-    <li>{{choices}} = {{choices.votes}} vote{{choices.votes|pluralize}}</li>
-  {% endfor %}
 
-  <a href="{% url 'polls:home' %}">back home</a>
-
+  <div class="poll__result">
+    <div class="poll poll__question--result">
+        <h1>RESULTS</h1>
+        <p>{{q.question_text}}</p>    
+    </div>
+    <div class="poll poll__progress--result">
+      {% for choices in q.choice_set.all %}
+        <p class="poll__choice">{{choices}} = {{choices.votes}} vote{{choices.votes|pluralize}}</p>
+        <progress class="progress-bar"value="{{choices.votes}}" max="100">{{choices.votes}}</progress>
+      {% endfor %}
+      <a href="{% url 'polls:home' %}"><button type="button" class="poll__btn"> <<back home"</button></a>
+    </div
+  </div>
 {%endblock%}
