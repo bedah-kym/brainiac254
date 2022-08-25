@@ -45,12 +45,15 @@ class deletenewpoll(DeleteView):
 
 def vote(request,question_id):
     q = get_object_or_404(Question,pk=question_id)
-    selected_choice = q.choice_set.get(pk=request.POST['choice'])
-    
-    if selected_choice not in q.choice_set.all():
-        return render(request,"polls/details.html",{"error_message":"your choice is invalid"})
-    else:
-        selected_choice.votes+=1
-        selected_choice.save()
+    try:
+        selected_choice = q.choice_set.get(pk=request.POST['choice'])
+        if selected_choice not in q.choice_set.all():
+            return render(request,"polls/details.html",{"error_message":"your choice is invalid"})
+        else:
+            selected_choice.votes+=1
+            selected_choice.save()
+
+    except KeyError:
+        return HttpResponseRedirect(reverse('polls:detail', args=(q.id,){}))
 
     return HttpResponseRedirect(reverse('polls:result', args=(q.id,)))
