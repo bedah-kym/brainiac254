@@ -2,13 +2,17 @@
 
 {% block content %}
 
-<h1>DELETE POLL </h1>
-    <form method="post">{% csrf_token %}
-    <p>Are you sure you want to delete "{{ object.question_text }}"?</p>
-    <input type="submit" value="Confirm">
-    </form>
+
+<div class="poll__result">
+  <h1>DELETE POLL </h1>
+  <form method="post">{% csrf_token %}
+  <p class="poll__choice">Are you sure you want to delete "{{ object.question_text }}"?</p>
+  <input type="submit" class="poll__deletebtn" value="Confirm">
+  </form>
+</div>
 
 
-  <a href="{% url 'polls:home' %}">back home</a>
+
+  <a href="{% url 'polls:home' %}"><button type="button" class="poll__btn" ame="button">Cancel Delete</button></a>
 
 {%endblock%}

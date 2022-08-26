@@ -5,7 +5,6 @@
 
 <h1>VOTE WISELY</h1>
     <form class="" action="{% url 'polls:vote' q.id %}" method="post">{% csrf_token %}
-
       <fieldset>
         <legend><h1>{{ q.question_text }}</h1></legend>
         {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}

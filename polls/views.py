@@ -3,6 +3,7 @@ from django.shortcuts import render,get_object_or_404
 from django.shortcuts import get_list_or_404
 from .models import Question,Choice
 from django.urls import reverse
+from django.http import Http404
 from django.utils import timezone
 from django.urls import reverse_lazy
 from django.views.generic import ListView,DetailView,CreateView,DeleteView
@@ -14,17 +15,36 @@ class homeview(ListView):
     context_object_name='questions'
 
     def get_queryset(self):
-        return Question.objects.filter(pub_date__lte=timezone.now()).order_by('pub_date')[:5]
+        return Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
     def get_total(self):
         pass
-
+"""
 class details(DetailView):
     model = Question
     template_name = "polls/details.html"
     context_object_name='q'
 
     def get_queryset(self):
-        return Question.objects.filter(pub_date__lte=timezone.now())
+        try:
+            poll=Question.objects.filter(pub_date__lte=timezone.now(),status='active')
+        except 404 :
+            return render(request,"polls/result.html",{"error_message":"your choice is invalid"})
+"""
+
+def details(request,question_id):
+    q = get_object_or_404(Question,pk=question_id,)
+    context= {
+        "error_message":"voting is closed",
+        "q":q
+    }
+
+    if q.status == 'A':
+        return render(request,"polls/details.html",context)
+    elif q.status == 'E':
+
+        return render(request,"polls/results.html",context)
+    else:
+        raise Http404('wrong poll status')
 
 class result(DetailView):
     model = Question
@@ -34,9 +54,6 @@ class result(DetailView):
     def get_queryset(self):
         return Question.objects.filter(pub_date__lte=timezone.now())
 
-class newchoice(CreateView):
-    model = Choice
-    fields = ['question','choice_text']
 
 
 class deletenewpoll(DeleteView):
@@ -44,7 +61,7 @@ class deletenewpoll(DeleteView):
     success_url = reverse_lazy('polls:home')
 
 def vote(request,question_id):
-    q = get_object_or_404(Question,pk=question_id)
+    q = get_object_or_404(Question,pk=question_id,)
     try:
         selected_choice = q.choice_set.get(pk=request.POST['choice'])
         if selected_choice not in q.choice_set.all():
@@ -54,6 +71,6 @@ def vote(request,question_id):
             selected_choice.save()
 
     except KeyError:
-        return HttpResponseRedirect(reverse('polls:detail', args=(q.id,){}))
+        return HttpResponseRedirect(reverse('polls:detail', args=(q.id,)))
 
     return HttpResponseRedirect(reverse('polls:result', args=(q.id,)))

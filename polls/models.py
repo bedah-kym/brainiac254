@@ -2,12 +2,23 @@ from django.db import models
 import datetime
 from django.utils import timezone
 from django.urls import reverse
-
+from django.contrib import admin
 # Create your models here.
+STATUS_CHOICES = [
+    ('A','active'),
+    ('E','ended'),
+    ('F','future')
+]
 class  Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
+    status = models.CharField(max_length=20,choices= STATUS_CHOICES,default='active')
 
+    @admin.display(
+        boolean=True,
+        ordering = 'pub_date',
+        description = 'published recently?'
+    )
     def __str__(self):
         return self.question_text
 
@@ -15,6 +26,10 @@ class  Question(models.Model):
         recent = timezone.now() - datetime.timedelta(days=9)
         future = timezone.now() + datetime.timedelta(days=1)
         return self.pub_date >= recent and self.pub_date < future
+
+    @admin.action(description = 'close selected polls ?')    
+    def end_poll(modeladmin,request,queryset):
+        queryset.update(status='E')
 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
