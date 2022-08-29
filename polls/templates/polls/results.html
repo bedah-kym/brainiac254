@@ -18,6 +18,7 @@
       {% for choices in q.choice_set.all %}
         <p class="poll__choice">{{choices}} = {{choices.votes}} vote{{choices.votes|pluralize}}</p>
         <progress class="progress-bar"value="{{choices.votes}}" max="100">{{choices.votes}}</progress>
+        
       {% endfor %}
       <a href="{% url 'polls:home' %}"><button type="button" class="poll__btn">home</button></a>
     </div

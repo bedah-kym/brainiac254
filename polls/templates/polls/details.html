@@ -3,17 +3,37 @@
 
 {% block content %}
 
-<h1>VOTE WISELY</h1>
+
+  <h1>VOTE WISELY</h1>
     <form class="" action="{% url 'polls:vote' q.id %}" method="post">{% csrf_token %}
       <fieldset>
         <legend><h1>{{ q.question_text }}</h1></legend>
-        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
         {% for choice in q.choice_set.all %}
           <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{choice.id }}">
-          <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+          <label  for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
         {% endfor %}
       </fieldset>
       <input class= "poll__btn"type="submit" value="vote">
     </form>
+
+    <section class="card">
+      <h2>todays poll </h2>
+      <div class="poll">
+        <div class="poll poll__progress">
+          {% for q in q.choice_set.all %}
+            <p class="poll__choice">{{q.choice_text}}({{q.votes}})</p>
+            <progress class="progress-bar"value="{{q.votes}}" max="100">{{q.votes}}</progress>
+          {% endfor %}
+          {% if q.status == 'A'%}
+            <p class='poll__published'>published on {{q.pub_date}} by {{request.user}}</p>
+          {% else %}
+            <p>This poll ended</p>
+            <a href="{% url 'polls:result' question.id %}"><button type="button" class="poll__deletebtn">view results</button></a>
+          {% endif %}
+        </div
+      </div>
+
+    </section>
 
 {% endblock%}

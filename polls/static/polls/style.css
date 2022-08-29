@@ -108,7 +108,7 @@ body{
   border-radius: 2px;
   color: var(--clr-dark);
   padding:.5em;
-  margin: 0.25em;
+  margin :0.25em;
   cursor: pointer;
   font-family:monospace;
   letter-spacing: 1px;
@@ -178,10 +178,12 @@ fieldset{
   width=50%;
   background:var(--clr-body);
 }
-label{
+.label{
   padding: 1em;
-  margin-bottom: 1em;
+  margin: 1em;
+  background-color: blue;
 }
+
 .poll__progress--result{
   background: white;
   padding:2em;
@@ -189,7 +191,7 @@ label{
 
 .poll__question--result{
   padding:2em;
-  
+  margin-top: 2em;
 }
 .poll__result{
   background: white;
