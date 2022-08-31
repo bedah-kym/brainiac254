@@ -275,7 +275,21 @@ fieldset{
     width:50%;
     margin-left: 58%;
   }
+  .poll__progress--result{
+    background: white;
+    padding:2em;
+  }
 
+  .poll__question--result{
+    padding:2em;
+    margin-top: 2em;
+  }
+  .poll__result{
+    background: white;
+    width:80%;
+    margin-left: 10%;
+    padding: 2em;
+  }
   .poll__choice{
     background:red;
     border-radius: 5px;
@@ -292,5 +306,25 @@ fieldset{
     padding: 1.5em;
     font-size: var(--fw-bold);
     font-weight: var(--fw-bold);
+  }
+}
+@media (max-width:300px) {
+  .poll__progress--result{
+    background: white;
+    padding:2em;
+  }
+
+  .poll__question--result{
+    padding:2em;
+    margin-top: 2em;
+  }
+  .poll__result{
+    background: red;
+    width:100%;
+    padding: 2em;
+  }
+  .progress-bar{
+    padding:0.55em;
+
   }
 }

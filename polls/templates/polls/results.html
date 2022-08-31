@@ -4,23 +4,29 @@
 
 
 
-  <div class="poll__result">
-    <div class="poll poll__question--result">
-        <h1>RESULTS</h1>
-        {% if error_message %}<p>
-          <strong>{{ error_message }} for</strong>[
-          {{q.question_text}} ]</p>
+  <div class="">
+      <div class="poll__result">
+        <div class="poll poll__question--result">
+          <h1>RESULTS</h1>
+            {% if error_message %}<p>
+              <h3>OOPS !</h3>
+              <strong>{{ error_message }} for this question</strong>
+              {{q.question_text}} </p>
 
-        {% endif %}
+            {% else %}
 
+
+            {% endif %}
+
+        </div>
+        <div class="poll poll__progress--result">
+          {% for choices in q.choice_set.all %}
+            <p class="poll__choice">{{choices}} = {{choices.votes}} vote{{choices.votes|pluralize}}</p>
+            <progress class="progress-bar"value="{{choices.votes}}" max="100">{{choices.votes}}</progress>
+
+          {% endfor %}
+          <a href="{% url 'polls:home' %}"><button type="button" class="poll__btn">home</button></a>
+        </div
+      </div>
     </div>
-    <div class="poll poll__progress--result">
-      {% for choices in q.choice_set.all %}
-        <p class="poll__choice">{{choices}} = {{choices.votes}} vote{{choices.votes|pluralize}}</p>
-        <progress class="progress-bar"value="{{choices.votes}}" max="100">{{choices.votes}}</progress>
-        
-      {% endfor %}
-      <a href="{% url 'polls:home' %}"><button type="button" class="poll__btn">home</button></a>
-    </div
-  </div>
 {%endblock%}

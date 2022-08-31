@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 import datetime
 from django.utils import timezone
 from django.urls import reverse
@@ -13,6 +14,7 @@ class  Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
     status = models.CharField(max_length=20,choices= STATUS_CHOICES,default='active')
+    sender = models.CharField(max_length=200)
 
     @admin.display(
         boolean=True,
@@ -27,7 +29,8 @@ class  Question(models.Model):
         future = timezone.now() + datetime.timedelta(days=1)
         return self.pub_date >= recent and self.pub_date < future
 
-    @admin.action(description = 'close selected polls ?')    
+
+    @admin.action(description = 'close selected polls ?')
     def end_poll(modeladmin,request,queryset):
         queryset.update(status='E')
 
@@ -36,8 +39,14 @@ class Choice(models.Model):
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
 
+
     def __str__(self):
         return self.choice_text
 
     def get_absolute_url(self):
         return reverse('polls:home')
+
+class Voteinfo (models.Model):
+    poll_text = models.ForeignKey(Question, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50,default='Empty')
+    answer = models.CharField(max_length=200,default='not yet voted')

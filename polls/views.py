@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render,get_object_or_404
 from django.shortcuts import get_list_or_404
-from .models import Question,Choice
+from .models import Question,Choice,Voteinfo
 from django.urls import reverse
 from django.http import Http404
 from django.utils import timezone
@@ -37,14 +37,16 @@ def details(request,question_id):
         "error_message":"voting is closed",
         "q":q
     }
-
-    if q.status == 'A':
-        return render(request,"polls/details.html",context)
-    elif q.status == 'E':
-
-        return render(request,"polls/results.html",context)
+    if request.user.is_authenticated:
+        if q.status == 'A':
+            return render(request,"polls/details.html",context)
+        elif q.status == 'E':
+            return render(request,"polls/results.html",context)
+        else:
+            raise Http404('wrong poll status')
     else:
-        raise Http404('wrong poll status')
+        messages.warning(request,'Please log in or create an account first')
+        return render(request,'USERS/register.html',{"form":reg_form})
 
 class result(DetailView):
     model = Question
@@ -62,15 +64,25 @@ class deletenewpoll(DeleteView):
 
 def vote(request,question_id):
     q = get_object_or_404(Question,pk=question_id,)
+    voter = request.user
+    error_message=""
     try:
         selected_choice = q.choice_set.get(pk=request.POST['choice'])
-        if selected_choice not in q.choice_set.all():
-            return render(request,"polls/details.html",{"error_message":"your choice is invalid"})
+        if selected_choice in q.choice_set.all():
+            if Voteinfo.objects.filter(name=voter,poll_text=q).exists():
+                error_message="you have already voted"
+            else:
+                new=Voteinfo.objects.create(
+                poll_text=q,
+                name = voter ,
+                answer = selected_choice
+                )
+                selected_choice.votes+=1
+                selected_choice.save()
         else:
-            selected_choice.votes+=1
-            selected_choice.save()
+            error_message="your choice is invalid"
 
     except KeyError:
         return HttpResponseRedirect(reverse('polls:detail', args=(q.id,)))
 
-    return HttpResponseRedirect(reverse('polls:result', args=(q.id,)))
+    return render(request,'polls/results.html',{"error_message":error_message})
