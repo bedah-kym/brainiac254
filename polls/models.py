@@ -14,7 +14,7 @@ class  Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
     status = models.CharField(max_length=20,choices= STATUS_CHOICES,default='active')
-    sender = models.CharField(max_length=200)
+    author = models.ForeignKey(User,on_delete=models.CASCADE,default=True)
 
     @admin.display(
         boolean=True,

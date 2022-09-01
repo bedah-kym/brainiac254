@@ -6,13 +6,15 @@ from django.urls import reverse
 from django.http import Http404
 from django.utils import timezone
 from django.urls import reverse_lazy
+from django.contrib import messages
 from django.views.generic import ListView,DetailView,CreateView,DeleteView
-# Create your views here.
+from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 
 class homeview(ListView):
     model = Question
     template_name = "polls/index.html"
     context_object_name='questions'
+    paginate_by = 2
 
     def get_queryset(self):
         return Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
@@ -35,7 +37,7 @@ def details(request,question_id):
     q = get_object_or_404(Question,pk=question_id,)
     context= {
         "error_message":"voting is closed",
-        "q":q
+        "q":q,
     }
     if request.user.is_authenticated:
         if q.status == 'A':
@@ -45,8 +47,10 @@ def details(request,question_id):
         else:
             raise Http404('wrong poll status')
     else:
-        messages.warning(request,'Please log in or create an account first')
-        return render(request,'USERS/register.html',{"form":reg_form})
+        context= {
+            "not_auth":"Please log in or create an account first"
+        }
+        return render(request,"polls/details.html",context)
 
 class result(DetailView):
     model = Question
@@ -56,11 +60,15 @@ class result(DetailView):
     def get_queryset(self):
         return Question.objects.filter(pub_date__lte=timezone.now())
 
-
-
-class deletenewpoll(DeleteView):
+class deletenewpoll(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
     model = Question
     success_url = reverse_lazy('polls:home')
+
+    def test_func(self):
+        poll= self.object.get()
+        if self.request.user == poll.author :
+            return True
+        return False
 
 def vote(request,question_id):
     q = get_object_or_404(Question,pk=question_id,)

@@ -1,9 +1,19 @@
 {% extends 'polls/base.html' %}
 
-
 {% block content %}
-
-
+  {% if not_auth %}
+    <div class="card">
+      <div class="poll">
+        <p class="poll poll__choice">{{not_auth}})</p>
+          <div class="poll poll__published2">
+            <a class="poll poll__btn2"href="{% url 'USERS:user-login' %}"><ul>Login</ul></a
+          </div>
+      </div>
+      <div class="poll poll__published3">
+        <a class="poll poll__btn2"href="{% url 'USERS:user-register' %}"><ul>Register</ul></a>
+      </div>
+    </div>
+  {% else %}
   <h1>VOTE WISELY</h1>
     <form class="" action="{% url 'polls:vote' q.id %}" method="post">{% csrf_token %}
       <fieldset>
@@ -35,5 +45,6 @@
       </div>
 
     </section>
+  {% endif %}
 
 {% endblock%}
