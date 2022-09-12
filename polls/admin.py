@@ -1,20 +1,25 @@
 from django.contrib import admin
-from .models import Question,Choice
+from .models import Question,Choice,Voteinfo
 
 
 
 class ChoiceTabular(admin.TabularInline):
     model = Choice
-    extra = 3
+
+
+class VoteTabular(admin.TabularInline):
+    model = Voteinfo
+    
 
 class QuestionAdmin(admin.ModelAdmin):
     fieldsets = [
     (None,  {'fields':['question_text'] } ),
-    ('Date information', {'fields':['pub_date'],'classes':['collapse']} ),
-    ('poll status',{'fields':['status'], 'classes':['collapse']})
+    ('Date information', {'fields':['pub_date']} ),
+    ('poll status',{'fields':['status'], 'classes':['collapse']}),
     ]
-    inlines = [ChoiceTabular]
-    list_display = ('question_text','pub_date','was_published_recently')
+
+    inlines = [ChoiceTabular,VoteTabular]
+    list_display = ('question_text','pub_date','was_published_recently','status')
     list_filter = ['pub_date']
     search_fields = ['question_text']
     actions= ['end_poll']
@@ -25,4 +30,7 @@ class QuestionAdmin(admin.ModelAdmin):
 
 admin.site.register(Question,QuestionAdmin)
 admin.site.register(Choice)
+admin.site.register(Voteinfo)
+
+
 # Register your models here.

@@ -15,9 +15,12 @@
               <progress class="progress-bar"value="{{question.votes}}" max="100">{{question.votes}}</progress>
             {% endfor %}
             {% if question.status == 'A'%}
-              <p class='poll__published'>published on {{question.pub_date}} by {{request.user}}</p>
-              <a href="{% url 'polls:delete' question.id %}"><button type="button" class="poll__deletebtn">Delete</button></a>
+              <p class='poll__published'>published on {{question.pub_date}} by {{question.author}}</p>
+              {% if request.user == question.author%}
+              <a href="{% url 'polls:delete' question.id %}"><button type="button" class="poll__deletebtn">Delete my poll</button></a>
+              {% else %}
               <a href="{% url 'polls:detail' question.id %}"><button type="button" class="poll__btn"> Vote</button></a>
+              {% endif %}
             {% else %}
               <p>This poll ended</p>
               <a href="{% url 'polls:result' question.id %}"><button type="button" class="poll__deletebtn">view results</button></a>
@@ -31,6 +34,7 @@
       {% endfor %}
 
   </section>
+
 
 
 {%endblock%}
