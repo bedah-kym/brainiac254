@@ -54,7 +54,7 @@
   list-style: none;
   font-family:cursive;
   text-align: center;
-  padding: 0 3em;
+  padding: 0.5em;
 }
 .nav__item{
  font-weight: var(--fw-reg);
