@@ -7,7 +7,7 @@ from django.contrib.auth import views as vw
 app_name='USERS'
 urlpatterns = [
     path('register/',views.register,name="user-register"),
-    path('login/',vw.LoginView.as_view(template_name='USERS/login.html'),name='login'),
-    path('logout/',vw.LogoutView.as_view(template_name='polls/index.html'),name='logout'),
+    path('login/',vw.LoginView.as_view(template_name='USERS/login.html'),name='user-login'),
+    path('logout/',vw.LogoutView.as_view(template_name='polls/index.html'),name='user-logout'),
 
 ]
