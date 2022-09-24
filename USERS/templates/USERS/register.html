@@ -1,4 +1,5 @@
 {% extends 'polls/base.html' %}
+{% load crispy_forms_tags % }
 {% load static %}
 {% block content %}
 
@@ -9,7 +10,7 @@
         <form class=""  method="post">{% csrf_token %}
           <fieldset>
             <legend>Register Here</legend>
-              <p>{{form.as_p}}</p>
+              <p>{{form|crispy}}</p>
           </fieldset>
           <button type="submit" value="submit">submit</button>
         </form>
