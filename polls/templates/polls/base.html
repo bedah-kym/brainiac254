@@ -9,18 +9,56 @@
     <title></title>
   </head>
 <!--nav and logo-->
-  <div class="logo">
-    <img src="" alt="">
-  </div>
-  <div class="navigation">
-    <nav class="nav">
-      <ul class="nav-list">
-        <li class=" nav__item"><a class="nav__link" href="{% url 'polls:home'%}">home</a></li>
+<nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block" style="z-index: 2000;">
+  <div class="container-fluid">
+    <!-- Navbar brand -->
+    <a class="navbar-brand nav-link" target="_blank" href="{% url 'polls:home' %}">
+      <strong>brainiac254</strong>
+    </a>
+    <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarExample01"
+      aria-controls="navbarExample01" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarExample01">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item active">
+          <a class="nav-link" aria-current="page" href="#">Home</a>
+        </li>
+        {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'USERS:user-logout' %}" rel="nofollow"
+              target="_blank">logout</a>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'USERS:user-login' %}" rel="nofollow"
+              target="_blank">login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'USERS:user-register' %}" rel="nofollow"
+              target="_blank">register</a>
+          </li>
+        {% endif %}
 
 
+      <ul class="navbar-nav d-flex flex-row">
+        <!-- Icons -->
+
+        <li class="nav-item me-3 me-lg-0">
+          <a class="nav-link" href="https://twitter.com/BedanMystro" rel="nofollow" target="_blank">
+            <i class="fab fa-twitter"></i>
+          </a>
+        </li>
+        <li class="nav-item me-3 me-lg-0">
+          <a class="nav-link" href="https://github.com/bedah-kym" rel="nofollow" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        </li>
       </ul>
-    </nav>
+    </div>
   </div>
+</nav>
+
 <!--body and sections-->
   <body class="body">
     <div class="messages">
