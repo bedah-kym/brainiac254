@@ -302,6 +302,7 @@ fieldset{
 @media (max-width:500px) {
   .nav-list{
     display:inline-flex;
+    padding: 0.5em;
   }
   .nav__item{
     padding:0.8em;
@@ -474,6 +475,7 @@ fieldset{
   }
   .nav-list{
     display:inline-flex;
+    padding:0.5em;
   }
   .nav__item{
     padding:0.8em;
