@@ -75,7 +75,7 @@ def vote(request,question_id):
     voter = request.user
     error_message=""
     try:
-        selected_choice = q.choice_set.get(pk=request.POST.get(['choice']))
+        selected_choice = q.choice_set.get(pk=request.POST['choice'])
         if selected_choice in q.choice_set.all():
             if Voteinfo.objects.filter(name=voter,poll_text=q).exists():
                 error_message="you have already voted"
