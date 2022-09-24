@@ -20,11 +20,11 @@
         <legend><h1>{{ q.question_text }}</h1></legend>
 
         {% for choice in q.choice_set.all %}
-          <input type="radio" name="choice" id="choice{{ forloop.counter }}">
+          <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{choice.id}}">
           <label  for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
         {% endfor %}
       </fieldset>
-      <input class= "poll__btn"type="submit" value="{{choice.choice_text.id}}">
+      <input class= "poll__btn"type="submit" value="Vote">
     </form>
 
     <section class="card">
