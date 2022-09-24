@@ -97,7 +97,7 @@
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-xl-5 col-md-8">
-              <form class="bg-white rounded shadow-5-strong p-5">
+              <form class="bg-white rounded shadow-5-strong p-5" method"POST">{% csrf_token %}
                 <!-- Email input -->
                   {{form.as_p}}
 
