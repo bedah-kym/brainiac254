@@ -13,7 +13,3 @@ def register(request):
     else:
         reg_form = UserCreationForm()
     return render(request,'USERS/register.html',{"form":reg_form})
-
-
-def login(request):
-    pass

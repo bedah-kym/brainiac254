@@ -50,11 +50,11 @@
 
 }
 .nav-list{
-  display: flex;
+  display: grid;
   list-style: none;
   font-family:cursive;
   text-align: center;
-  padding: 0 3em;
+  padding: 0.5em;
 }
 .nav__item{
  font-weight: var(--fw-reg);
@@ -300,7 +300,13 @@ fieldset{
 
 
 @media (max-width:500px) {
-
+  .nav-list{
+    display:inline-flex;
+    padding: 0.5em;
+  }
+  .nav__item{
+    padding:0.8em;
+  }
   .card{
     background: var(--clr-body);
     display:block;
@@ -467,10 +473,17 @@ fieldset{
     font-family: var(--ff-secondary);
     padding:0.2em;
   }
-
+  .nav-list{
+    display:inline-flex;
+    padding:0.5em;
+  }
+  .nav__item{
+    padding:0.8em;
+  }
   .page-links{
     text-decoration: none;
     color: var(--clr-accent);
     padding:1.5em;
   }
+
 }

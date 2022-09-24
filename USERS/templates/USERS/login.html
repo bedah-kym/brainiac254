@@ -1,0 +1,20 @@
+{% extends 'polls/base.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="container">
+
+      <div class="form">
+
+        <form class=""  method="post">{% csrf_token %}
+          <fieldset>
+            <legend>Register Here</legend>
+              <p>{{form}}</p>
+          </fieldset>
+          <button type="submit" value="submit">submit</button>
+        </form>
+        <a href="{% url 'USERS:user-login'%}">Already have an account ?</a>
+      </div>
+
+    </div>
+{% endblock %}
